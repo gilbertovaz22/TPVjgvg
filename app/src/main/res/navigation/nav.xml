@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav"
+    app:startDestination="@id/page_ventas"
+    >
+
+<fragment
+    android:id="@+id/page_productos"
+    android:name="com.jgvg.tpvjgvg.views.Productos.ProductosFragment"
+    tools:layout="@layout/fragment_productos"
+    />
+
+    <fragment
+        android:id="@+id/page_proveedores"
+        android:name="com.jgvg.tpvjgvg.views.Proveedores.ProveedoresFragment"
+        tools:layout="@layout/fragment_proveedores"
+        />
+    <fragment
+        android:id="@+id/page_ventas"
+        android:name="com.jgvg.tpvjgvg.views.Ventas.VentasFragment"
+        tools:layout="@layout/fragment_ventas"
+        />
+    <fragment
+        android:id="@+id/page_Reportes"
+        android:name="com.jgvg.tpvjgvg.views.Reportes.ReportesFragment"
+        tools:layout="@layout/fragment_reportes"
+        />
+    <fragment
+        android:id="@+id/page_desarrollo"
+        android:name="com.jgvg.tpvjgvg.views.acerca.desaFragment"
+        tools:layout="@layout/fragment_acerca"
+        />
+
+
+
+
+
+
+</navigation>
