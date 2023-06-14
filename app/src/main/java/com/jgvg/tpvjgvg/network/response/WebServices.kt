@@ -53,7 +53,7 @@ interface WebServices {
         @Body prov: Producto
 
     ): retrofit2.Response<ProductoResponse>
-// end ventas
+// end Productos
 
     /// ventas
 

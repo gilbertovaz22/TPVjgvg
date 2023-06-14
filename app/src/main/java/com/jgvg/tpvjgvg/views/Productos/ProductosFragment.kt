@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Spinner
@@ -30,6 +31,7 @@ class ProductosFragment : Fragment(R.layout.fragment_productos), ProductoAdapter
     private lateinit var adapter: ProductoAdapter
     private lateinit var viewModel: ProductosViewModel
 
+    private lateinit var etCodigo: EditText
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -44,6 +46,9 @@ class ProductosFragment : Fragment(R.layout.fragment_productos), ProductoAdapter
             adapter.listaProductos = it as ArrayList<Producto>
             adapter.notifyDataSetChanged()
         }
+        binding.ibtnAdd.setOnClickListener{
+            alertDialogAddUpdate("add")
+        }
     }
     private  fun  setupRecyclerView(){
      binding.rvProductos.layoutManager = LinearLayoutManager(requireContext())
@@ -51,14 +56,20 @@ class ProductosFragment : Fragment(R.layout.fragment_productos), ProductoAdapter
         binding.rvProductos.adapter = adapter
     }
 
-    private  fun alertDialogAddUpdate(){
+    private  fun alertDialogAddUpdate(accion: String){
         val builder = AlertDialog.Builder(requireContext())
         val inflater = requireActivity().layoutInflater
 
         val vista = inflater.inflate(R.layout.alert_dialog_producto, null)
         builder.setView(vista)
 
+        if (accion == "add"){
+            builder.setTitle("Agregar Producto")
+        }
+
         builder.setCancelable(false)
+
+        etCodigo = vista.findViewById(R.id.etCodigo)
 
         val ibtnEscaner = vista.findViewById(R.id.ibtnEscaner) as ImageButton
         val etNomProducto = vista.findViewById<EditText>(R.id.etNomProducto) as EditText
@@ -68,10 +79,32 @@ class ProductosFragment : Fragment(R.layout.fragment_productos), ProductoAdapter
         val etPrecio = vista.findViewById<EditText>(R.id.etPrecio)as EditText
         val etAlmacen = vista.findViewById<EditText>(R.id.etAlmacen)as EditText
 
+        viewModel.getNomProveedores()
+        viewModel.listaNomProveedores.observe(requireActivity()){
+            spiProveedor.adapter = ArrayAdapter(
+                requireContext(),
+                android.R.layout.simple_spinner_item,
+                it
+
+            )
+        }
+
 
 
 
         builder.setPositiveButton("Aceptar"){ _, _ ->
+            viewModel.validarCampos(
+                accion,
+                etCodigo.text.toString().trim(),
+                etNomProducto.text.toString().trim(),
+                etDescripcion.text.toString().trim(),
+                spiProveedor.selectedItem.toString(),
+                etPrecio.text.toString().trim(),
+                etAlmacen.text.toString().trim()
+
+
+            )
+            adapter.notifyDataSetChanged()
 
         }
 

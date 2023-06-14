@@ -108,8 +108,6 @@ class ProductosViewModel : ViewModel() {
        viewModelScope.launch(Dispatchers.IO ){
           if (accion == "add"){
               response = RetrofitClient.webServices.addProducto(prod)
-
-
           }else{
               response = RetrofitClient.webServices.updateProducto(prod.codProducto, prod)
           }
